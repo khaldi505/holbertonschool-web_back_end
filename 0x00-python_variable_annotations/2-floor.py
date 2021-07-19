@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-    type-annotated function concat that takes a string str1 and a string str2
-    as arguments and returns a concatenated string
+     a type-annotated function floor which takes
+    a float n as argument and returns the floor of the float.
 """
 
 
 def floor(n: float) -> int:
     """
-    returns a concatenated string
+    returns the floor of the float.
     """
     return int(n)
