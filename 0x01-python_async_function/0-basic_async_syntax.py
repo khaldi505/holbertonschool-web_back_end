@@ -6,7 +6,7 @@ wait_random
 """
 
 
-async def wait_random(max_delay=10):
+async def wait_random(max_delay: int = 10) -> float:
     """
     generate a random float, sleep then return the random float
     """
