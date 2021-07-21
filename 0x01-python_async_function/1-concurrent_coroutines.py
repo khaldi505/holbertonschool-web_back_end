@@ -4,6 +4,8 @@ wait_n
 """
 import asyncio
 import typing
+
+
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
@@ -12,4 +14,4 @@ async def wait_n(n: int, max_delay: int) -> typing.List[float]:
     """
     a7dohom lam yanem, ala khater realpython documention
     """
-    return x
+    return sorted(x)
