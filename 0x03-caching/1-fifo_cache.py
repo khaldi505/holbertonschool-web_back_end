@@ -8,14 +8,25 @@ from base_caching import BaseCaching
 
 class FIFOCache(BaseCaching):
     """
-        placeholderigigigigigigiginhebnmout
+        placeholder
     """
+
+    # def __init__(self):
+    #     super().__init__()
+
     def put(self, key, item):
+        """
+        placeholder
+        """
         if key is None or item is None:
             pass
-        if BaseCaching.MAX_ITEMS == len(self.cache_data.keys()):
-            print("DISCARD:", list(self.cache_data.items())[0][0])
-            self.cache_data.pop(list(self.cache_data.items())[0][0])
+        if (
+            len(self.cache_data.items()) == BaseCaching.MAX_ITEMS
+            and (key not in self.cache_data.keys())
+        ):
+            firstItem = list(self.cache_data)[0]
+            print("DISCARD:", firstItem)
+            self.cache_data.pop(firstItem)
         self.cache_data[key] = item
 
     def get(self, key):
