@@ -18,16 +18,15 @@ class FIFOCache(BaseCaching):
         """
         placeholder
         """
-        if not key or not item:
-            pass
-        if (
-            len(self.cache_data.items()) == BaseCaching.MAX_ITEMS
-            and (key not in self.cache_data.keys())
-        ):
-            firstItem = list(self.cache_data)[0]
-            print("DISCARD:", firstItem)
-            self.cache_data.pop(firstItem)
-        self.cache_data[key] = item
+        if not (key is None or item is None):
+            if (
+                len(self.cache_data.items()) == BaseCaching.MAX_ITEMS
+                and (key not in self.cache_data.keys())
+            ):
+                firstItem = list(self.cache_data)[0]
+                print("DISCARD:", firstItem)
+                self.cache_data.pop(firstItem)
+            self.cache_data[key] = item
 
     def get(self, key):
         """gets the required element by key"""
