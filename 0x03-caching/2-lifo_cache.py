@@ -7,14 +7,13 @@ from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
-
-    LAST_PUT = ""
     """
         placeholder
     """
+    LAST_PUT = ""
 
-    # def __init__(self):
-    #     super().__init__()
+    def __init__(self):
+        super().__init__()
 
     def put(self, key, item):
         """
