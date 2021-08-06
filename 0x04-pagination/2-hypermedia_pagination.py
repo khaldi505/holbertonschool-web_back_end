@@ -54,7 +54,9 @@ class Server:
         return result
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, int]:
-
+        """
+            Get hyper
+        """
         total_pages = len(self.dataset()) / page_size
         test = len(self.dataset()) % page_size
         if test != 0:
