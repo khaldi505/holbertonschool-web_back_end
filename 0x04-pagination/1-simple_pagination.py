@@ -34,9 +34,10 @@ class Server:
         """
         Get page
         """
-        assert type(page)
-        assert page > 0 and
-        assert page or page_size <= -1
+        assert type(page) == int
+        assert type(page_size) == int
+        assert page > 0
+        assert page_size > 0
         indx = self.index_range(page, page_size)
         start = indx[0]
         end = indx[1]
