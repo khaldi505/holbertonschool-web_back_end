@@ -45,7 +45,6 @@ class Server:
         result = []
         csv_file = self.dataset()
         if len(csv_file) < end:
-            
             return []
 
         while start != end:
@@ -54,7 +53,7 @@ class Server:
 
         return result
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str,int]:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, int]:
 
         total_pages = len(self.dataset()) / page_size
         test = len(self.dataset()) % page_size
@@ -67,5 +66,11 @@ class Server:
         prev_page = page - 1
         if prev_page == 0:
             prev_page = None
-        result = {'page_size': page_size, 'page': page, 'data': data, 'next_page': next_page, 'prev_page': prev_page, 'total_pages': int(total_pages)}
+        result = {
+                    'page_size': page_size,
+                    'page': page, 'data': data,
+                    'next_page': next_page,
+                    'prev_page': prev_page,
+                    'total_pages': int(total_pages)
+                }
         return result
