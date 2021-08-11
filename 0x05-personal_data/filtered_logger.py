@@ -20,6 +20,6 @@ def filter_datum(
     sensitve informations.
     """
     for field in fields:
-        message = re.sub("{}=([a-zA-Z0-9\\\\/]+){}".format(field, separator),
+        message = re.sub("{}=(.*?){}".format(field, separator),
                          field + "=" + redaction + separator,  message)
     return message
