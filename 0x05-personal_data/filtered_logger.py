@@ -10,7 +10,7 @@ import re
 
 
 def filter_datum(
-            fields: List,
+            fields: List[str],
             redaction: str,
             message: str,
             separator: str
