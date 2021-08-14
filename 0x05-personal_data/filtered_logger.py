@@ -6,10 +6,12 @@ from typing import List
 import logging
 import re
 
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
-        """
+    """
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
@@ -44,3 +46,18 @@ class RedactingFormatter(logging.Formatter):
             message = re.sub("{}=(.*?){}".format(field, separator),
                              field + "=" + redaction + separator,  message)
         return message
+
+
+def get_logger() -> logging.Logger:
+
+    """
+        get some logging done
+    """
+    logger = logging.getLogger("user_data")
+    stream_handler = logging.StreamHandler()
+    logger.propagate = False
+    stream_handler.setLevel(logging.INFO)
+    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+    logger.addHandler(stream_handler)
+
+    return logger
