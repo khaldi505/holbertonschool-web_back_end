@@ -81,3 +81,26 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                     database=PERSONAL_DATA_DB_NAME
                                     )
     return connection
+
+
+def main():
+    """
+        main
+    """
+
+    connection = get_db()
+    cursor = connection.cursor()
+    cursor.execute("select * from users")
+    record = cursor.fetchall()
+    for row in record:
+        for coloumn in row:
+            print(coloumn)
+
+    cursor.close()
+    connection.close()
+
+    return
+
+
+if __name__ == '__main__':
+    main()
