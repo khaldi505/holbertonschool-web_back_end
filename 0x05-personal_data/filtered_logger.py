@@ -15,6 +15,7 @@ PERSONAL_DATA_DB_PASSWORD = os.getenv("PERSONAL_DATA_DB_PASSWORD")
 PERSONAL_DATA_DB_USERNAME = os.getenv("PERSONAL_DATA_DB_USERNAME")
 PERSONAL_DATA_DB_HOST = os.getenv("PERSONAL_DATA_DB_HOST")
 
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
     """
@@ -68,11 +69,15 @@ def get_logger() -> logging.Logger:
 
     return logger
 
+
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """
         get sql db
     """
-    connection = mysql.connector.connect(user=PERSONAL_DATA_DB_USERNAME, password=PERSONAL_DATA_DB_PASSWORD,
-                                 host=PERSONAL_DATA_DB_HOST,
-                                 database=PERSONAL_DATA_DB_NAME)
+    connection = mysql.connector.connect(
+                                    user=PERSONAL_DATA_DB_USERNAME,
+                                    password=PERSONAL_DATA_DB_PASSWORD,
+                                    host=PERSONAL_DATA_DB_HOST,
+                                    database=PERSONAL_DATA_DB_NAME
+                                    )
     return connection
