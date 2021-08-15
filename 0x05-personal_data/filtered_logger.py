@@ -5,9 +5,15 @@ filter_datum returns the log message:
 from typing import List
 import logging
 import re
+import mysql.connector
+import os
+
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
-
+PERSONAL_DATA_DB_NAME = os.getenv("PERSONAL_DATA_DB_NAME")
+PERSONAL_DATA_DB_PASSWORD = os.getenv("PERSONAL_DATA_DB_PASSWORD")
+PERSONAL_DATA_DB_USERNAME = os.getenv("PERSONAL_DATA_DB_USERNAME")
+PERSONAL_DATA_DB_HOST = os.getenv("PERSONAL_DATA_DB_HOST")
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
@@ -61,3 +67,12 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+        get sql db
+    """
+    connection = mysql.connector.connect(user=PERSONAL_DATA_DB_USERNAME, password=PERSONAL_DATA_DB_PASSWORD,
+                                 host=PERSONAL_DATA_DB_HOST,
+                                 database=PERSONAL_DATA_DB_NAME)
+    return connection
