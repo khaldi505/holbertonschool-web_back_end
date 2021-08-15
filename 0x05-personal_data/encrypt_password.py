@@ -5,7 +5,7 @@ amazing password being hashed
 import bcrypt
 
 
-def hash_password(password: str):
+def hash_password(password: str) -> bytes:
     """
     i already told u,
     here ur amazing password will be hashed
