@@ -10,11 +10,19 @@ class Auth:
     """
     class docc
     """
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         '''
             salut lbnet
         '''
-        return False
+        if path and not (
+            path in excluded_paths or path + "/" in excluded_paths) or (
+            excluded_paths is None or
+            excluded_paths == []
+                ):
+            return True
+        else:
+            return False
 
     def authorization_header(self, request=None) -> str:
         """
