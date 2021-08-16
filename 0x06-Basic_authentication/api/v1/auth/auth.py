@@ -15,10 +15,11 @@ class Auth:
         '''
             salut lbnet
         '''
+        if excluded_paths is None or excluded_paths == []:
+            return True
         if path and not (
             path in excluded_paths or path + "/" in excluded_paths) or (
-            excluded_paths is None or
-            excluded_paths == []
+            not path
                 ):
             return True
         else:
