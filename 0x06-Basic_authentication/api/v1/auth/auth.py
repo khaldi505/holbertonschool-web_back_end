@@ -3,6 +3,7 @@
 auth
 """
 from flask import request
+from typing import List, TypeVar
 
 
 class Auth:
@@ -19,4 +20,9 @@ class Auth:
         """
         alaa khir
         """
+        return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """
+        nyes"""
         return None
