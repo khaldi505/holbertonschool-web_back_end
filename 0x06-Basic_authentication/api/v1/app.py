@@ -21,6 +21,9 @@ if auth:
 
 @app.before_request
 def before_request():
+    """
+        before request blueprint handler
+    """
     unauthorized = [
         '/api/v1/status/',
         '/api/v1/unauthorized/',
