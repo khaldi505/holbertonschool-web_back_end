@@ -8,12 +8,12 @@ from typing import List, TypeVar
 
 class Auth:
     """
-    class docc
+    Auth class Doc
     """
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         '''
-            salut lbnet
+            Define which routes don't need authentication
         '''
         if excluded_paths is None or excluded_paths == []:
             return True
@@ -27,9 +27,12 @@ class Auth:
 
     def authorization_header(self, request=None) -> str:
         """
-        alaa khir
+        Request validation!
         """
-        return None
+        if request is None or ("Authorization" not in request.headers):
+            return None
+
+        return request.headers["Authorization"]
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
