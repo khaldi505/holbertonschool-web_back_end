@@ -38,7 +38,3 @@ class Auth:
         """
         nyes"""
         return None
-
-
-class BasicAuth(Auth):
-    pass
