@@ -6,8 +6,6 @@
 from api.v1.auth.auth import Auth
 import base64
 from typing import TypeVar
-import json
-import csv
 from models.user import User
 
 
@@ -95,3 +93,27 @@ class BasicAuth(Auth):
             return None
 
         return user
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """
+            current user yes
+        """
+        if not self.authorization_header(request):
+            return None
+        header = self.authorization_header(request)
+
+        header = self.extract_base64_authorization_header(header)
+        if header is None:
+            return None
+        dec_header = self.decode_base64_authorization_header(header)
+        if dec_header is None:
+            return None
+        creds = self.extract_user_credentials(dec_header)
+        if creds is None:
+            return None
+        email = self.extract_user_credentials(dec_header)[0]
+        pwd = self.extract_user_credentials(dec_header)[1]
+
+        if self.user_object_from_credentials(email, pwd) is None:
+            return None
+        return self.user_object_from_credentials(email, pwd)
