@@ -5,6 +5,10 @@
 """
 from api.v1.auth.auth import Auth
 import base64
+from typing import TypeVar
+import json
+import csv
+from models.user import User
 
 
 class BasicAuth(Auth):
@@ -67,3 +71,26 @@ class BasicAuth(Auth):
             decoded_base64_authorization_header.split(":")[0],
             decoded_base64_authorization_header.split(":")[1]
         )
+
+    def user_object_from_credentials(
+        self,
+        user_email: str,
+        user_pwd: str
+            ) -> TypeVar('User'):
+        if (
+            user_email is None or
+            user_pwd is None or
+            type(user_email) is not str or
+            type(user_pwd) is not str
+                ):
+            return None
+        user = User()
+        search = user.search({"email": user_email, })
+        if not search:
+            return None
+        user = search[0]
+
+        if not user.is_valid_password(user_pwd):
+            return None
+
+        return user
