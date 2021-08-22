@@ -7,6 +7,7 @@ from api.v1.auth.auth import Auth
 import base64
 from typing import TypeVar
 from models.user import User
+import sys
 
 
 class BasicAuth(Auth):
@@ -21,7 +22,6 @@ class BasicAuth(Auth):
             ) -> str:
         """
         Basic - Base64 part
-
         """
         if (
             type(authorization_header) != str or
@@ -66,8 +66,8 @@ class BasicAuth(Auth):
                 ):
             return (None, None)
         return (
-            decoded_base64_authorization_header.split(":")[0],
-            decoded_base64_authorization_header.split(":")[1]
+            decoded_base64_authorization_header.split(":", 1)[0],
+            decoded_base64_authorization_header.split(":", 1)[1]
         )
 
     def user_object_from_credentials(
