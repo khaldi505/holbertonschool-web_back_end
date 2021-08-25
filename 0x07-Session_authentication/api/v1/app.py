@@ -32,6 +32,7 @@ else:
 def before_request():
     """
         before request blueprint handler
+        test
     """
     unauthorized = [
         '/api/v1/status/',
