@@ -5,8 +5,6 @@ a User model for the database users.
 from flask import Flask
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql.expression import true
-from sqlalchemy.sql.sqltypes import NullType
 Base = declarative_base()
 
 
