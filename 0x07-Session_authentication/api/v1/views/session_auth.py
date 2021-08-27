@@ -2,16 +2,9 @@
 """
 for now this module do nothing
 """
-from flask.globals import current_app
-from api.v1.views.users import create_user
-from sys import stderr
-
-from flask.wrappers import Response
-from api.v1.auth.auth import Auth
-import uuid
 from models.user import User
 from os import getenv
-from flask import jsonify, abort, request
+from flask import jsonify, request
 from api.v1.views import app_views
 
 
