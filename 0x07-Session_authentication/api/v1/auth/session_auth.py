@@ -12,7 +12,7 @@ import uuid
 from models.user import User
 from os import getenv
 from flask import jsonify, abort, request
-from api.v1.views import app_views
+from api.v1.views import app_views, session_auth
 
 
 class SessionAuth(Auth):
@@ -52,3 +52,20 @@ class SessionAuth(Auth):
         user_id = self.user_id_for_session_id(cookie_value)
         user = User.get(user_id)
         return user
+
+    def destroy_session(self, request=None):
+        """
+            destroy the current session,
+            log the user out
+        """
+        if request is None:
+            return False
+        session_id = self.session_cookie(request)
+        if not request.form.get(session_id):
+            return False
+        else:
+            user_id = self.user_id_by_session_id(session_id)
+            if not user_id:
+                return False
+            del self.user_id_by_session_id[session_id]
+            return True

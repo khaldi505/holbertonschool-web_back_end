@@ -5,7 +5,7 @@ for now this module do nothing
 from api.v1.auth.auth import Auth
 from models.user import User
 from os import getenv
-from flask import jsonify, request
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 
 
@@ -42,3 +42,18 @@ def auth_session() -> str:
         out = jsonify(current_user[0].to_json())
         out.set_cookie(cookie_name, session_id)
         return out
+
+
+@app_views.route(
+    '/auth_session/logout',
+    methods=['DELETE'],
+    strict_slashes=False
+      )
+def logout() -> str:
+    """log user out
+    """
+
+    from api.v1.app import auth
+    if auth.destroy_session(request) is False:
+        abort(404)
+    return jsonify({}), 200
