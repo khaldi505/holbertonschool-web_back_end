@@ -2,6 +2,7 @@
 """
 for now this module do nothing
 """
+from flask import Blueprint
 from models.user import User
 from os import getenv
 from flask import jsonify, request
