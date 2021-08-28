@@ -67,6 +67,12 @@ class DB:
             based on the kwargs passed in the method arguments
             also commit changes to the database
         """
+        valid_keyword = ["id", "email", "session_id", "reset_token"]
+        keyword_keys = kwargs.keys()
+        if not all(
+            keyword_keys in valid_keyword for keyword_keys in valid_keyword
+                ):
+            raise(ValueError)
         try:
             user = self.find_user_by(id=user_id)
         except Exception:
