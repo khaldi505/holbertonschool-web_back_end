@@ -5,6 +5,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 
 
 class DB:
@@ -40,3 +42,20 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
+
+    def find_user_by(self, **keyword):
+        """
+        find user by a keyword arguments
+        and return the first row found in users
+        """
+        valid_keyword = ["id", "email", "session_id", "reset_token"]
+        keyword_keys = keyword.keys()
+        if not all(
+            keyword_keys in valid_keyword for keyword_keys in valid_keyword
+                ):
+            raise(InvalidRequestError)
+        user = self._session.query(User).filter_by(**keyword).first()
+        if user is None:
+            raise(NoResultFound)
+        else:
+            return user
