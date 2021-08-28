@@ -59,3 +59,22 @@ class DB:
             raise(NoResultFound)
         else:
             return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+            update_user : will look up for the user
+            using it's id, then update it's attributes
+            based on the kwargs passed in the method arguments
+            also commit changes to the database
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+        except Exception:
+            raise(ValueError)
+        try:
+            for k, v in kwargs.items():
+                setattr(user, k, v)
+            self._session.commit()
+        except Exception:
+            raise(ValueError)
+        return None
