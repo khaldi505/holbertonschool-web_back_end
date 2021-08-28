@@ -43,7 +43,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **keyword: dict) -> User:
+    def find_user_by(self, **keyword) -> User:
         """
         find user by a keyword arguments
         and return the first row found in users
