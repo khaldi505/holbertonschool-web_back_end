@@ -34,9 +34,11 @@ class DB:
             add_user: returns a user object
             and save the user to the database
         """
-        if email and hashed_password:
-            new_User = User()
-            new_User.email = email
-            new_User.hashed_password = hashed_password
-            return new_User
-        return None
+
+        user = User(
+            email=email,
+            hashed_password=hashed_password
+            )
+        self._session.add(user)
+        self._session.commit()
+        return user
