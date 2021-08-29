@@ -78,9 +78,9 @@ class DB:
         except Exception:
             raise(ValueError)
         try:
-            for k, v in kwargs.items():
-                setattr(user, k, v)
-            self._session.commit()
+            if user:
+                for k, v in kwargs.items():
+                    setattr(user, k, v)
+                self._session.commit()
         except Exception:
             raise(ValueError)
-        return None
