@@ -3,7 +3,6 @@
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.session import Session
 from user import Base, User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
@@ -22,7 +21,7 @@ class DB:
         self.__session = None
 
     @property
-    def _session(self) -> Session:
+    def _session(self):
         """Memoized session object
         """
         if self.__session is None:
@@ -75,7 +74,7 @@ class DB:
             raise(ValueError)
         try:
             user = self.find_user_by(id=user_id)
-        except Exception:
+        except NoResultFound or InvalidRequestError:
             raise(ValueError)
         try:
             if user:
