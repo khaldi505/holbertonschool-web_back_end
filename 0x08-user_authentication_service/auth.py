@@ -41,7 +41,7 @@ class Auth:
             return created_user
         raise(ValueError("User " + self._db.find_user_by(email=email).email))
 
-    def valid_login(self, email: str, password: str) -> Boolean:
+    def valid_login(self, email: str, password: str) -> bool:
         """
             valid it the login
             Try locating the user by email.
