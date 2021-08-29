@@ -66,20 +66,16 @@ class DB:
             based on the kwargs passed in the method arguments
             also commit changes to the database
         """
-        valid_keyword = ["id", "email", "session_id", "reset_token"]
-        keyword_keys = kwargs.keys()
-        if not all(
-            keyword_keys in valid_keyword for keyword_keys in valid_keyword
-                ):
-            raise(ValueError)
-        try:
-            user = self.find_user_by(id=user_id)
-        except NoResultFound or InvalidRequestError:
-            raise(ValueError)
-        try:
-            if user:
-                for k, v in kwargs.items():
+        valid_keyword = [
+            "id",
+            "email", "session_id", "reset_token", "hashed_password"]
+
+        user = self.find_user_by(id=user_id)
+        if user:
+            for k, v in kwargs.items():
+                if k in valid_keyword:
                     setattr(user, k, v)
-                self._session.commit()
-        except Exception:
-            raise(ValueError)
+                else:
+                    # print(k in valid_keyword)
+                    raise(ValueError)
+            self._session.commit()
