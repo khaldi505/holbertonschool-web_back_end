@@ -5,6 +5,8 @@ flask app
 import flask
 from flask import Flask
 from flask.globals import request
+from flask.helpers import make_response
+from flask.json import jsonify
 from auth import Auth
 
 
@@ -37,9 +39,27 @@ def users():
         return flask.jsonify({"message": "email already registered"}), 400
     return flask.jsonify(
         {
-            "email": "<registered email>",
+            "email": request.form['email'],
             "message": "user created"
             })
+
+
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login():
+    """
+        logs you in ?
+    """
+    email = request.form['email']
+    pwd = request.form['password']
+    v_login = AUTH.valid_login(email, pwd)
+
+    if (email and pwd and v_login):
+        session_id = AUTH.create_session(request.form['email'])
+        json_payload = {"email": request.form['email'], "message": "logged in"}
+        resp = make_response(json_payload)
+        resp.set_cookie('session_id', session_id)
+        return resp
+    flask.abort(401)
 
 
 if __name__ == "__main__":
