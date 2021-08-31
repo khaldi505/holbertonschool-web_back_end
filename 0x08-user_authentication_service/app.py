@@ -3,7 +3,7 @@
 flask app
 """
 import flask
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask.globals import request
 from flask.helpers import make_response
 from flask.json import jsonify
@@ -71,6 +71,7 @@ def logout():
     if not (session_id or AUTH.get_user_from_session_id(session_id)):
         flask.abort(403)
     AUTH.destroy_session(session_id)
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":
