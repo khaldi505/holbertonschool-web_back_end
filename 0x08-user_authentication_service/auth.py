@@ -59,6 +59,7 @@ class Auth:
             If it exists, check the password
             with bcrypt.checkpw. If it matches return True.
             In any other case, return False.
+            test
         """
         if not(email and password):
             return False
