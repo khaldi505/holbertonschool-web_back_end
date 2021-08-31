@@ -4,6 +4,7 @@ Auth module:
 _hash_password
 """
 import bcrypt
+from sqlalchemy.orm import exc
 from sqlalchemy.sql.sqltypes import Boolean
 from db import DB
 import argparse
@@ -85,3 +86,16 @@ class Auth:
         user.session_id = _generate_uuid()
         self._db._session.commit()
         return user.session_id
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """
+            get user from session_id
+        """
+        try:
+            if session_id is None or session_id is "":
+                return None
+            user = self._db.find_user_by(session_id=session_id)
+            if user:
+                return user
+        except NoResultFound:
+            return None
