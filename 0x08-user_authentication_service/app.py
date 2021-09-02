@@ -100,5 +100,25 @@ def reset_password():
         flask.abort(403)
 
 
+@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+def update_password():
+    """
+        updates the
+        current user password
+    """
+    reset_token = request.form['reset_token']
+    email = request.form['email']
+    new_pwd = request.form['new_password']
+    try:
+        AUTH.update_password(reset_token, new_pwd)
+        payload = {
+            "email": email,
+            "message": "Password updated"
+                }
+        return jsonify(payload), 200
+    except Exception as e:
+        flask.abort(403)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000", debug=True)
