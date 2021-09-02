@@ -61,15 +61,14 @@ class Auth:
             In any other case, return False.
             test
         """
-        if not(email and password):
-            return False
         try:
             user = self._db.find_user_by(email=email)
+            if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+                return True
+            else:
+                return False
         except NoResultFound:
             return False
-        if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
-            return True
-        return False
 
     def create_session(self, email: str) -> str:
         """
@@ -93,7 +92,7 @@ class Auth:
             get user from session_id
         """
         try:
-            if session_id is None or session_id is "":
+            if session_id is None or session_id == "":
                 return None
             user = self._db.find_user_by(session_id=session_id)
             if user:
