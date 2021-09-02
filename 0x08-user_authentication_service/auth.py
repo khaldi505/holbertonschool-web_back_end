@@ -5,7 +5,6 @@ _hash_password
 """
 import bcrypt
 from sqlalchemy.orm import exc
-from sqlalchemy.sql.sqltypes import Boolean
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -131,8 +130,7 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(reset_token=reset_token)
-            salt = bcrypt.gensalt()
-            hashed_pwd = bcrypt.hashpw(password, salt)
+            hashed_pwd = _hash_password(password)
             self._db.update_user(user.id, hashed_password=hashed_pwd)
             self._db.update_user(user.id, reset_token=None)
         except Exception as e:
