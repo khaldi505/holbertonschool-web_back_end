@@ -7,7 +7,6 @@ import bcrypt
 from sqlalchemy.orm import exc
 from sqlalchemy.sql.sqltypes import Boolean
 from db import DB
-import argparse
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
@@ -114,3 +113,14 @@ class Auth:
             user = self._db.update_user(user_id, session_id=None)
         except NoResultFound:
             return None
+
+    def get_reset_password_token(self, email: str) -> str:
+        """
+            mthod that takes an email str arg and returns a string
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            self._db.update_user(user.id, reset_token=_generate_uuid())
+            return user.reset_token
+        except Exception as e:
+            raise(ValueError)
