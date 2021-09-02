@@ -47,7 +47,10 @@ class Auth:
         try:
             user = self._db.find_user_by(email=email)
             if user:
-                raise(ValueError("User " + self._db.find_user_by(email=email).email))
+                raise(
+                    ValueError(
+                        "User " + self._db.find_user_by(email=email).email)
+                    )
         except NoResultFound:
             hashed_password = _hash_password(password)
             created_user = self._db.add_user(email, hashed_password)
