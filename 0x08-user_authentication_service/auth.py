@@ -53,7 +53,8 @@ class Auth:
         if user:
             raise(
                 ValueError(
-                    "User " + self._db.find_user_by(email=email).email)
+                    "User {} already exists".format(
+                        self._db.find_user_by(email=email).email))
                     )
 
     def valid_login(self, email: str, password: str) -> bool:
