@@ -4,6 +4,7 @@ flask app
 """
 import flask
 from flask import Flask, redirect, url_for
+from flask import json
 from flask.globals import request
 from flask.helpers import make_response
 from flask.json import jsonify
@@ -83,6 +84,19 @@ def profile():
     if user:
         return jsonify({'email': '{}'.format(user.email)})
     else:
+        flask.abort(403)
+
+
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def reset_password():
+    """
+    reset password
+    """
+    email = request.form['email']
+    try:
+        reset_token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": email, "reset_token": reset_token})
+    except Exception as e:
         flask.abort(403)
 
 
