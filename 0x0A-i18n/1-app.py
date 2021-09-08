@@ -14,3 +14,14 @@ class Config(object):
     a configuration variable
     """
     LANGUAGES = ['en', 'fr']
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
+
+
+app.config.from_object(Config)
+
+
+@app.route("/", methods=['GET'])
+def hello_world():
+    """hello world"""
+    return render_template('0-index.html')
