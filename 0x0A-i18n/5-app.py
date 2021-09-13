@@ -35,6 +35,9 @@ def get_locale():
     if request.args.get('locale'):
         if request.args.get('locale') in Config.LANGUAGES:
             return request.args.get('locale')
+    user = getattr(g, 'user', None)
+    if user is not None:
+        return user.locale
     return request.accept_languages.best_match(['en', 'fr'])
 
 
