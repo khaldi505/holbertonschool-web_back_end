@@ -40,6 +40,9 @@ def get_user() -> dict:
 
 @app.before_request
 def before_request():
+    """
+    before request handler
+    """
     if get_user():
         g.user = get_user()
 
