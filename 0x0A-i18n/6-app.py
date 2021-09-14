@@ -5,6 +5,7 @@
 import flask
 from flask import Flask, render_template, g, request
 from flask_babel import Babel
+from flask_babel import refresh
 
 
 app = Flask(__name__)
@@ -43,8 +44,9 @@ def before_request():
     """
     before request handler
     """
-    if get_user():
+    if get_user() is not None:
         g.user = get_user()
+        refresh()
 
 
 @babel.localeselector
@@ -54,7 +56,11 @@ def get_locale():
     if request.args.get('locale'):
         if request.args.get('locale') in Config.LANGUAGES:
             return request.args.get('locale')
-    if g.user['locale'] and g.user['locale'] in Config.LANGUAGES:
+
+    if hasattr(g, "user") and(
+                    g.user['locale'] and
+                    g.user['locale'] in Config.LANGUAGES
+                    ):
         return g.user['locale']
 
     return request.accept_languages.best_match(['en', 'fr'])
