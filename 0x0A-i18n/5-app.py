@@ -28,25 +28,9 @@ class Config(object):
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
-@babel.localeselector
-def get_locale():
-    """ if a user is logged in, use the locale from the user settings
+def get_user() -> dict:
     """
-    if request.args.get('locale'):
-        if request.args.get('locale') in Config.LANGUAGES:
-            return request.args.get('locale')
-    user = getattr(g, 'user', None)
-    if user is not None:
-        return user.locale
-    return request.accept_languages.best_match(['en', 'fr'])
-
-
-app.config.from_object(Config)
-
-
-def get_user():
-    """
-    get_user from users
+    get user
     """
     user_id = request.args.get('login_as')
     if user_id and int(user_id) in users:
@@ -56,12 +40,22 @@ def get_user():
 
 @app.before_request
 def before_request():
+    if get_user():
+        g.user = get_user()
+
+
+@babel.localeselector
+def get_locale():
+    """ if a user is logged in, use the locale from the user settings
     """
-    before request handler
-    """
-    user = get_user()
-    if user:
-        g.user = user
+    if request.args.get('locale'):
+        if request.args.get('locale') in Config.LANGUAGES:
+            return request.args.get('locale')
+
+    return request.accept_languages.best_match(['en', 'fr'])
+
+
+app.config.from_object(Config)
 
 
 @app.route("/", methods=['GET'])
