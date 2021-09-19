@@ -48,8 +48,8 @@ class TestAccessNestedMap(unittest.TestCase):
         test get json
         """
         @parameterized.expand([
-            ("http://example.com", {"payload": True}),
-            ("http://holberton.io", {"payload": False})
+            ("http://example.com", {"test_payload": True}),
+            ("http://holberton.io", {"test_payload": False})
         ])
         def test_get_json(self, test_url, test_payload):
             """
@@ -58,7 +58,7 @@ class TestAccessNestedMap(unittest.TestCase):
                 assert that we're getting
                 the expected result
             """
-            with patch('utils.requests.get') as mc:
+            with patch('requests.get') as mc:
                 mc.return_value.json.return_value = test_payload
                 response = get_json(test_url)
                 self.assertEqual(response, test_payload)
