@@ -5,7 +5,7 @@ Access nested map function
 works as expected
 """
 import utils
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 import unittest
 from unittest.mock import patch
 from parameterized import parameterized, parameterized_class
@@ -43,6 +43,7 @@ class TestAccessNestedMap(unittest.TestCase):
         """
         self.assertRaises(KeyError,  access_nested_map, nested_map, path)
 
+
 class TestGetJson(unittest.TestCase):
     """
     test get json
@@ -62,4 +63,26 @@ class TestGetJson(unittest.TestCase):
             mc.return_value.json.return_value = test_payload
             response = get_json(test_url)
             self.assertEqual(response, test_payload)
+            mc.assert_called_once()
+
+
+class TestMemoize(unittest.TestCase):
+    """
+    a class that tests the
+    test_memoize method
+    """
+    def test_memoize(self):
+        class TestClass:
+
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method', return_value=42) as mc:
+            obj = TestClass()
+            self.assertEqual(obj.a_property, mc.return_value)
+            self.assertEqual(obj.a_property, mc.return_value)
             mc.assert_called_once()
