@@ -50,6 +50,7 @@ class Cache():
         """
         return int(data.decode())
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         """
