@@ -8,6 +8,25 @@
 import redis
 import uuid
 from typing import Callable, Union, Optional
+from functools import wraps
+
+
+def count_calls(method: Callable) -> Callable:
+    """
+    """
+    key = method.__qualname__
+    """
+    the key variable
+    will hold the name
+    of the method used
+    to increment the count calls
+    later on
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwds):
+        self._redis.incr(key)
+        return method(self, *args, **kwds)
+    return wrapper
 
 
 class Cache():
