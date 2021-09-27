@@ -2,11 +2,11 @@
 """
 async_generator module
 """
-
-
 import asyncio
 import random
-async def async_generator():
+
+
+async def async_generator() -> None:
     """
     async_generator
     """
