@@ -38,3 +38,21 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(
                 org_client.org['repos_url'], org_client._public_repos_url
                     )
+
+    @patch("client.get_json", return_value={'key': '55548798'})
+    def test_public_repos(self, get_json_mock):
+        """
+        """
+        get_json_mock()
+        with patch(
+            'client.GithubOrgClient._public_repos_url',
+                new_callable=PropertyMock) as mcp:
+            mcp.return_value = {'key': '55548798'}
+            test_obj = client
+            test_obj = test_obj.GithubOrgClient('another_test')
+            ex = test_obj._public_repos_url
+            self.assertEqual(
+                ex, mcp.return_value
+            )
+            get_json_mock.assert_called_once()
+            mcp.assert_called_once()
