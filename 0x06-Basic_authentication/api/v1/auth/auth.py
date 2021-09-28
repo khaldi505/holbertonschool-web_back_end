@@ -17,13 +17,14 @@ class Auth:
         '''
         if excluded_paths is None or excluded_paths == []:
             return True
-        if path and not (
-            path in excluded_paths or path + "/" in excluded_paths) or (
-            not path
-                ):
-            return True
-        else:
-            return False
+        for ex_path in excluded_paths:
+            if ex_path == path:
+                return False
+            if ex_path.endswith('*'):
+                pfx_path = ex_path[:-1]
+                if pfx_path in path:
+                    return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
