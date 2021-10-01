@@ -8,6 +8,8 @@ import unittest
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized, parameterized_class
 import client
+from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -69,3 +71,56 @@ class TestGithubOrgClient(unittest.TestCase):
             client.GithubOrgClient.has_license(dict_license, key_license),
             expc_result
         )
+
+
+@parameterized_class(
+    (
+        'org_payload',
+        'repos_payload',
+        'expected_repos',
+        'apache2_repos'
+    ),
+    TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """
+     GithubOrgClient.public_repos method in an integration test.
+     That means that we will only mock code that sends external requests.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        set up
+        """
+        cls.get_patcher = patch('requests.get')
+        cls.mc = cls.get_patcher.start()
+        cls.mc.return_value.json.side_effect = [
+            cls.org_payload, cls.repos_payload,
+            cls.org_payload, cls.repos_payload,
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        tear down
+        """
+        cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """
+        """
+        testClass = GithubOrgClient(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            )
+        self.assertEqual(testClass.org, self.org_payload)
+        self.assertEqual(testClass.repos_payload, self.repos_payload)
+
+    def test_public_repos_with_license(self):
+        """
+        """
+        testClass = GithubOrgClient(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            )
+        self.assertEqual(testClass.public_repos(license="apache-2.0"),
+                         self.apache2_repos)
