@@ -29,7 +29,7 @@ export default class HolbertonCourse {
     this._length = length
   }
 
-  set students(length) {
+  set students(students) {
     if (students.some((element) => (typeof(element) !== "string"))){
       throw TypeError('length must be a array of strings')
     }
