@@ -16,11 +16,11 @@ export default class Currency {
     if (typeof(code) === 'string') { this._code = code }
   }
 
-  get code(){
-    return this.this._code
+  get code() {
+    return this._code
   }
 
-  displayFullCurrency(){
+  displayFullCurrency() {
     return (`${this._name} (${this._code})`)
   }
 
