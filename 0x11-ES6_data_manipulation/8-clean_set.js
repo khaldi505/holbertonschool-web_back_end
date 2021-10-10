@@ -1,13 +1,14 @@
 export default function cleanSet(set, startString){
-let counter = 2
-let result = "" 
+if (typeof startString === "String") {return ""}
+if (typeof set !== typeof(new Set)) {return ""}
+
+let counter = 0
+let result = [] 
+
 set.forEach(element => {
+
 if (element && element.startsWith(startString) && startString !== "") {
-if (counter === set.size){
-result += element.slice(startString.length, element.length)
-} else { result += element.slice(startString.length, element.length) + "-" }
-counter += 1;
-}
-})
-return result
+result.push(element.slice(startString.length, element.length))
+}})
+return result.join('-')
 }
