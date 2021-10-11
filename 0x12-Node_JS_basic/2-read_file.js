@@ -17,7 +17,11 @@ function countStudents(filePath) {
     console.log(result[0]);
     console.log(`Number of students in CS: ${result[1].length}. List: ${result[1].toString().split(',').join(', ')}`);
     console.log(`Number of students in SWE: ${result[2].length}. List: ${result[2].toString().split(',').join(', ')}`);
-  } catch (err) { if (err.code === 'ENOENT') { throw new Error('Cannot load the database'); } }
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      throw new Error('Cannot load the database');
+    }
+  }
 }
 
 module.exports = countStudents;
