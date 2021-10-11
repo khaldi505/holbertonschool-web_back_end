@@ -1,8 +1,8 @@
 const Fs = require('fs');
 
-function countStudents(filePath) {
+function countStudents(path) {
   try {
-    let databaseFile = Fs.readFileSync(filePath, 'utf8').toString();
+    let databaseFile = Fs.readFileSync(path, 'utf8').toString();
     databaseFile = databaseFile.split('\n');
     databaseFile.shift();
     const numOfStudents = databaseFile.length;
