@@ -14,7 +14,7 @@ const app = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     promise.then((data) => {
       res.end(`This is the list of our students\n${data}`);
-    }).catch();
+    }).catch((err) => { res.end(`This is the list of our students\nCannot load the database`); });
   } else if (req.url === '/') {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
