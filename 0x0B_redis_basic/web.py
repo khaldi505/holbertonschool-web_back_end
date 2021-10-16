@@ -20,13 +20,13 @@ def counter(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(url):
         Urlkey = url + "key"
-        if redis.get(Urlkey):
-            return redis.get(Urlkey).decode("utf-8")
+        if _redis.get(Urlkey):
+            return _redis.get(Urlkey).decode("utf-8")
  
         _redis.incr("count:{}".format(url))
         result = method(url)
-        redis.set(Urlkey, result)
-        redis.expire(Urlkey, 10)
+        _redis.set(Urlkey, result)
+        _redis.expire(Urlkey, 10)
 
         return result
     return(wrapper)
