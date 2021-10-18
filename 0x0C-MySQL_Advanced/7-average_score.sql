@@ -1,5 +1,6 @@
 -- creates a stored procedure ComputeOverallScoreForUser
 DELIMITER $$
+DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 CREATE PROCEDURE ComputeOverallScoreForUser (IN user_id INT)
 BEGIN
     UPDATE users
