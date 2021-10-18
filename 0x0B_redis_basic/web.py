@@ -22,7 +22,6 @@ def counter(method: Callable) -> Callable:
         Urlkey = url + "key"
         if _redis.get(Urlkey):
             return _redis.get(Urlkey).decode("utf-8")
- 
         _redis.incr("count:{}".format(url))
         result = method(url)
         _redis.set(Urlkey, result)
